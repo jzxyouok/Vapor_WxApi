@@ -5,5 +5,7 @@
 </head>
     <body>
         #import("body")
+    模板引擎 你好
+<h1> #(var) </h1>
     </body>
 </html>

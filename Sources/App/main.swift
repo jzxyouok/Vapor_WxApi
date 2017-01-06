@@ -54,7 +54,9 @@ drop.post("post", handler: {
     ])
 })
 
-drop.get("curl") { req in
+drop.get("curl") {
+    req in
+    
     var shoppingList :Bag = Bag<String>()
     shoppingList.add("小米净水器")
     shoppingList.add("小米白色LED台灯")
@@ -67,6 +69,27 @@ drop.get("curl") { req in
         "购物车宗类-->":shoppingList.uniqueCount,
         "购物车数量-->":shoppingList.totalCount
     ])
+}
+
+drop.get("抓取", handler: { request in
+    return try drop.view.make("index.html")
+})
+
+import PostgreSQL
+drop.get("Jay") { //尾随闭包语法
+    request in
+    let psql = PostgreSQL.Database(
+        dbname :"postgres",
+        user   :"postgres",
+        password:"dingkang3"
+    )
+    let resultSet :[[String:Node]] = try psql.execute("SELECT * FROM milist;")
+    for dict in resultSet {
+        print(dict)
+    }
+    /// 渲染到 模板引擎....
+    let tpl = try drop.view.make("base.leaf", ["var": resultSet[0]["mycommendofpro"]?.string ?? "没有数据" ])
+    return tpl
 }
 
 drop.run()

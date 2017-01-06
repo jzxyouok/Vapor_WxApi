@@ -7,10 +7,27 @@
 //  HTTP后端服务器组件 Vapor 1.0 + 中间件Jay(Linux版Json框架)
 
 import Foundation
+import Vapor
+
+public var versionWithMe :String = "HTTP后端服务器组件 Vapor 1.0 + 中间件Jay(Linux版Json框架)"
+public let signature :String = "version - 0.17 by 丁亢 2017 in ChengDu City"
 
 public struct Bag <Element : Hashable> {
+    
     public var name :String = "购物车"
+    
+    public var version :String {
+        get{
+            return versionWithMe + signature
+        }
+        
+        set {
+            versionWithMe = newValue + "签名为空"
+        }
+    }
+    
     fileprivate var contents:[Element :Int] = [:]
+    
     public var uniqueCount :Int {
         return contents.count
     }
@@ -42,6 +59,7 @@ public struct Bag <Element : Hashable> {
     }
 }
 extension Bag {
+    
     var description :String {
         return String.init(describing: contents)
     }
