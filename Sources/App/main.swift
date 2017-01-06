@@ -76,20 +76,25 @@ drop.get("抓取", handler: { request in
 })
 
 import PostgreSQL
-drop.get("Jay") { //尾随闭包语法
-    request in
-    let psql = PostgreSQL.Database(
-        dbname :"postgres",
-        user   :"postgres",
-        password:"dingkang3"
-    )
-    let resultSet :[[String:Node]] = try psql.execute("SELECT * FROM milist;")
-    for dict in resultSet {
-        print(dict)
+drop.post("Jay") { request in //尾随闭包语法
+    /// HTTP get收参
+    guard let tbname = request.data["tbname"]?.string else{
+        return try JSON.init(node :["message":"没有权限~"])
     }
-    /// 渲染到 模板引擎....
-    let tpl = try drop.view.make("base.leaf", ["var": resultSet[0]["mycommendofpro"]?.string ?? "没有数据" ])
-    return tpl
+    let psql = PostgreSQL.Database(dbname: "postgres", user: "postgres", password: "dingkang3")
+    let resultSet :[[String:Node]] = try psql.execute("SELECT * FROM \(tbname);")
+    var temp = [Node]()
+    for item in resultSet { temp += [try item.makeNode()] }
+    return try temp.makeJSON()
+}
+
+drop.get("Jay") { request in //尾随闭包语法
+    /// HTTP get收参
+    let psql = PostgreSQL.Database(dbname: "postgres", user: "postgres", password: "dingkang3")
+    let resultSet :[[String:Node]] = try psql.execute("SELECT * FROM milist;")
+    var temp = [Node]()
+    for item in resultSet { temp += [try item.makeNode()] }
+    return try temp.makeJSON()
 }
 
 drop.run()
