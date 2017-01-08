@@ -11,7 +11,6 @@
 // 哲学：还是 MVC
 
 import Foundation
-
 import Vapor
 import HTTP
 
@@ -134,8 +133,8 @@ final class TplIMPController {
                 print(JSON.init(temp[0].makeNode()))
                 
                 return try drop.view.make("base", [
-                    "poet":"何当共剪西窗烛? 却话巴山夜雨时",
-                    "dataNodes": JSON.init(temp[0].makeNode())
+                    "d1": JSON.init(temp[3].makeNode()),
+                    "d2": JSON.init(temp[4].makeNode())
                 ])
             }
         }else {
