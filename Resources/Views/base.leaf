@@ -5,7 +5,8 @@
 </head>
     <body>
         #import("body")
-    模板引擎 你好
-<h1> #(var) </h1>
+模板引擎 你好
+            <font color='red' size = 18 face = '楷体'> #(poet) </font>
+            <font color='blue' size = 11 face = '楷体'> #(dataNodes) </font>
     </body>
 </html>
