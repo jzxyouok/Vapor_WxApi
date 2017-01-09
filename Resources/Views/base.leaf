@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    #import("head")
+#import("head")
 </head>
-    <body>
-        #import("body")
+<body>
+#import("body")
 
-            <font color='red' size = 11 face = '楷体'> 基于iOS/H5/Android的三端大一统<后台管理系统> 让我看到了希望 </font> </br>
+<font color='red' size = 5 face = '楷体'> 基于iOS/H5/Android的三端大一统<后台管理系统> 让我看到了希望 </font> </br>
 
-<font color='blue' size = 14 face = '楷体'> #(d1.name) </font> </br>
-<font color='blue' size = 14 face = '楷体'> #(d1.working_group) </font> </br>
-<font color='orange' size = 14 face = '楷体'> #(d1.dk_idx) </font> </br>
-<font color='purple' size = 14 face = '楷体'> #(d1.qq_number) </font> </br>
-<font color='green' size = 14 face = '楷体'> #(d1.phone_number) </font> </br>
+<table bgColor='yellow' border='2' width = 1200 height = 60>
+<tr align ='center'>
+    <td>员工编号</td>
+    <td>姓名</td>
+    <td>所在部门</td>
+    <td>联系方式QQ</td>
+    <td>联系方式Phone</td>
+    </tr>
+#loop(Nodes,"userInfo") {
+    <tr align='center' valign='center' height = 40>
+    <td bgColor='red'>| #(userInfo.dk_idx)!</td>
+    <td bgColor='white'>| #(userInfo.name)!</td>
+    <td bgColor='purple'>| #(userInfo.working_group)!</td>
+    <td bgColor='gray'>| #(userInfo.phone_number)!</td>
+    <td bgColor='pink'>| #(userInfo.qq_number)!</td>
+    </tr>
+}
+</table>
 
-<font color='blue' size = 14 face = '楷体'> #(d2.name) </font> </br>
-<font color='blue' size = 14 face = '楷体'> #(d2.working_group) </font> </br>
-<font color='orange' size = 14 face = '楷体'> #(d2.dk_idx) </font> </br>
-<font color='purple' size = 14 face = '楷体'> #(d2.qq_number) </font> </br>
-<font color='green' size = 14 face = '楷体'> #(d2.phone_number) </font> </br>
-    </body>
+</body>
 </html>

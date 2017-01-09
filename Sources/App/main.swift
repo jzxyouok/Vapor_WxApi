@@ -122,20 +122,25 @@ final class TplIMPController {
             }
             
             routingRegisterIMP["leaf"] = { request in
-                let pgsql = PostgreSQL.Database(dbname: "postgres", user: "postgres", password: "dingkang3")
-                let rs :[[String:Node]] = try pgsql.execute("SELECT * FROM yz_employ;")
+                let pgsql = PostgreSQL.Database(dbname: "postgres",
+                                                user: "postgres",
+                                                password: "dingkang3")
+                let resultSet :[[String:Node]] = try pgsql.execute("SELECT * FROM yz_employ;")
                 
-                var temp = [Node]()
-                for row in 0 ..< rs.count {
-                    temp.append(try rs[row].makeNode())
+                var NodesArray :[Node] = [Node]()
+                for index in  0..<resultSet.count {
+                    let element :Node
+                    if index == 0 {
+                        continue
+                    }else {
+                        element = try resultSet[index].makeNode()
+                    }
+                    NodesArray.append(element)
                 }
                 
-                print(JSON.init(temp[0].makeNode()))
+                print(NodesArray)
                 
-                return try drop.view.make("base", [
-                    "d1": JSON.init(temp[3].makeNode()),
-                    "d2": JSON.init(temp[4].makeNode())
-                ])
+                return try drop.view.make("base.leaf", ["Nodes":NodesArray.makeNode()])
             }
         }else {
             fatalError("没有授权码 跑出一个致命错误")
