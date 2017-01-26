@@ -10,7 +10,6 @@
 // View: 设计人员只交HTML纯文本 不可编程 后端人员交 #{} 模板语言标签 先制作静态网页 然后交给后台 插入 tag标签 转换为 动态数据 每次请求 从缓存铺pull 缓存每个一个时间周期 从总数据库 进行一次数据同步 刷新HTML页/app推送Json数据源
 // 哲学：还是 MVC
 
-import Foundation
 import Vapor
 import HTTP
 
@@ -138,8 +137,6 @@ final class TplIMPController {
                     NodesArray.append(element)
                 }
                 
-                print(NodesArray)
-                
                 return try drop.view.make("base.leaf", ["Nodes":NodesArray.makeNode()])
             }
         }else {
@@ -152,14 +149,16 @@ final class TplIMPController {
 let drop = Droplet()
 let 注册表 = TplIMPController.init(code: "dk...")
 
-drop.get("api_v1_404", handler: 注册表.routingRegisterIMP["api_v1_404"]!)
-drop.get("api_v1_json", handler: 注册表.routingRegisterIMP["api_v1_json"]!)
-drop.get("api_v1_param", handler: 注册表.routingRegisterIMP["api_v1_param"]!)
-drop.get("model", handler: 注册表.routingRegisterIMP["model"]!)
-drop.post("post", handler: 注册表.routingRegisterIMP["post"]!)
-drop.post("curl", handler: 注册表.routingRegisterIMP["curl"]!)
-drop.get("postgreSQL", handler: 注册表.routingRegisterIMP["postgreSQL"]!)
+drop.get("1", handler: 注册表.routingRegisterIMP["api_v1_404"]!)
+drop.get("2", handler: 注册表.routingRegisterIMP["api_v1_json"]!)
+drop.get("3", handler: 注册表.routingRegisterIMP["api_v1_param"]!)
+drop.get("4", handler: 注册表.routingRegisterIMP["model"]!)
+drop.get("5", handler: 注册表.routingRegisterIMP["post"]!)
+drop.get("6", handler: 注册表.routingRegisterIMP["curl"]!)
+drop.get("postgresql", handler: 注册表.routingRegisterIMP["postgreSQL"]!)
 drop.get("leaf", handler: 注册表.routingRegisterIMP["leaf"]!)
 
 drop.resource("posts", PostController())
 drop.run()
+
+
