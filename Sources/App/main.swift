@@ -106,20 +106,6 @@ final class TplIMPController {
                 return try drop.view.make("index.html")
             }
             
-            // API测试(重要) 连接阿里云PostgreSQL数据库大后端
-            routingRegisterIMP["postgreSQL"] = { req in
-                let dbName :String = req.data["dbname"]?.string ?? "milist"
-                /// HTTP get收参
-                let psql = PostgreSQL.Database(dbname: "postgres", user: "postgres", password: "dingkang3")
-                let resultSet :[[String:Node]] = try psql.execute("SELECT * FROM \(dbName);")
-                var temp = [Node]()
-                for item in resultSet {
-                    temp += [try item.makeNode()]
-                    print(item)
-                }
-                return try temp.makeJSON()
-            }
-            
             routingRegisterIMP["leaf"] = { request in
                 let pgsql = PostgreSQL.Database(dbname: "postgres",
                                                 user: "postgres",
@@ -155,8 +141,7 @@ drop.get("3", handler: 注册表.routingRegisterIMP["api_v1_param"]!)
 drop.get("4", handler: 注册表.routingRegisterIMP["model"]!)
 drop.get("5", handler: 注册表.routingRegisterIMP["post"]!)
 drop.get("6", handler: 注册表.routingRegisterIMP["curl"]!)
-drop.get("postgresql", handler: 注册表.routingRegisterIMP["postgreSQL"]!)
-drop.get("leaf", handler: 注册表.routingRegisterIMP["leaf"]!)
+drop.get("sql", handler: 注册表.routingRegisterIMP["leaf"]!)
 
 drop.resource("posts", PostController())
 drop.run()
